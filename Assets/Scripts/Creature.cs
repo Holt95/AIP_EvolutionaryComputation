@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using System.Collections;
 public class Creature : Evolvable {
 
@@ -31,3 +32,4 @@ public class Creature : Evolvable {
                 obj.transform.eulerAngles.z < 180 + angle;
     }
 }
+*/

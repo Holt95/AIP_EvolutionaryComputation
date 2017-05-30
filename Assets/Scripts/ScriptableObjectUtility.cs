@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿/*
+Resource from: http://wiki.unity3d.com/index.php?title=CreateScriptableObjectAsset
+*/
+
+using UnityEngine;
 using UnityEditor;
 using System.IO;
 

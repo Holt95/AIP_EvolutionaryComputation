@@ -1,6 +1,4 @@
-﻿// Alan Zucconi
-// www.alanzucconi.com
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -27,6 +25,7 @@ public class EvolutionHistory : ScriptableObject {
         bestGenomes.Clear();    
     }
 
+    //Resource from: http://wiki.unity3d.com/index.php?title=CreateScriptableObjectAsset
     [MenuItem("Assets/Evolution History")]
     public static void CreateAsset()
     {

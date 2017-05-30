@@ -14,7 +14,7 @@ public class Evolution : MonoBehaviour
     public int minMutations = 1;
     public int maxMutations = 5;
 
-    public float simulationTime = 10; // time in secons simulation is run
+    public float simulationTime = 10; // time in seconds simulation is run
 
     public int sexed = 1; // How many sexual reproductions to have in each generation?
 
