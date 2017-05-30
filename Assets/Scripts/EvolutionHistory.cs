@@ -34,10 +34,14 @@ public class EvolutionHistory : ScriptableObject {
     }
 
 
+    //Check if we have new highest/lowest scores
     public void CalculateMinMaxScore ()
     {
-        float min = +1000000;
-        float max = -1000000;
+        //These are simple initial values, chosen to be very high and very low so that the first batch of results will always be correctly scored
+        float min = 10000;
+        float max = -10000;
+
+        //Check if genome score was best or worst
         foreach (Genome genome in generations)
         {
             if (genome.score < min)

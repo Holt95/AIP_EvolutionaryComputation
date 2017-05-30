@@ -58,11 +58,6 @@ public struct Genome : IMutable<Genome>{
     }
 }
 
-
-
-
-
-
 [System.Serializable]
 public struct Gene : IMutable<Gene>
 {
@@ -119,10 +114,6 @@ public struct Gene : IMutable<Gene>
         return (max - min) / 2 * (1 + Mathf.Sin(x * Mathf.PI * 2 / period)) + min;
     }
 
-
-
-
-
     public static float Evaluate3At(Gene gene, float time)
     {
         float amp = gene.values[0];
@@ -135,9 +126,6 @@ public struct Gene : IMutable<Gene>
 
         return amp * Mathf.Cos(phase + freq * time);
     }
-
-
-
 }
 
 public delegate float GeneController(Gene gene, float time);
