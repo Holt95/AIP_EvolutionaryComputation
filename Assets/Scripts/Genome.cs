@@ -131,7 +131,7 @@ public struct Gene : IMutable<Gene>
     public void Mutate()
     {
         int i = Random.Range(0, values.Length-1);
-        values[i] += Random.Range(-0.1f, 0.1f);
+        values[i] += Random.Range(-0.2f, 0.2f);
         values[i] = Mathf.Clamp01(values[i]);
     }
     
