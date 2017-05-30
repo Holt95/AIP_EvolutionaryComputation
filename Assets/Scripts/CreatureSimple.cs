@@ -41,9 +41,15 @@ public class CreatureSimple : Evolvable
                 obj.transform.eulerAngles.z > 360 - angle;
     }
 
-    public bool IsDown(GameObject obj, float angle = 45)
+    /// <summary>
+    /// Check if head is pointing down or not
+    /// </summary>
+    /// <param name="head">Head to check</param>
+    /// <param name="angle">Angle to check for</param>
+    /// <returns></returns>
+    public bool IsDown(GameObject head, float angle = 45)
     {
-        return obj.transform.eulerAngles.z > 180 - angle &&
-                obj.transform.eulerAngles.z < 180 + angle;
+        return head.transform.eulerAngles.z > 180 - angle &&
+               head.transform.eulerAngles.z < 180 + angle;
     }
 }
