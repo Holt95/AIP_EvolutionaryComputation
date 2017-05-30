@@ -25,7 +25,7 @@ public class Evolution : MonoBehaviour
     public GameObject container;
 
     public EvolutionHistory history;
-       
+
     private List<List<Environment>> environments = new List<List<Environment>>();
 
     public float minSinusVal = -1;
@@ -56,6 +56,14 @@ public class Evolution : MonoBehaviour
 
         history.CalculateMinMaxScore();
         StartCoroutine(Simulation());
+    }
+
+    void Update()
+    {
+        if (isRunning)
+        {
+            FindEnvironmentWithHighestScore();
+        }
     }
 
 
@@ -265,6 +273,27 @@ public class Evolution : MonoBehaviour
         foreach (List<Environment> tests in environments)
             foreach (Environment environment in tests)
                 environment.evolvable.enabled = enabled;
+    }
+
+    public Environment FindEnvironmentWithHighestScore()
+    {
+        float bestScore = 0;
+        Environment bestEnvironment = null;
+        foreach (List<Environment> tests in environments)
+            foreach (Environment environment in tests)
+            {
+                float score = environment.evolvable.GetScore();
+                environment.evolvable.GetComponent<CreatureSimple>().body.GetComponent<SpriteRenderer>().color = Color.grey;
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestEnvironment = environment;
+                    bestEnvironment.evolvable.GetComponent<CreatureSimple>().body.GetComponent<SpriteRenderer>().color = Color.red;
+                   
+                } 
+            }
+
+        return bestEnvironment;
     }
     private bool isRunning;
     public static float startTime = 0;

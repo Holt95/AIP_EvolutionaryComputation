@@ -12,14 +12,21 @@ public class CreatureSimple : Evolvable
     
     public void FixedUpdate()
     {
+        //for each limb, express the genes values over set amount of time
         for (int i = 0; i < limbs.Length; i++)
+        {
             limbs[i].SetValue(express(genome.genes[i], Time.time - Evolution.startTime));
-        
-        genome.score = GetScore(); // Keeps the score updated
+        }
+
+        // Keeps the score updated
+        genome.score = GetScore();
 
         //If body is up with 20 degree
         if (IsUp(body))
-            bodyUpTime += Time.fixedDeltaTime; //The amount of time it is able to hold up its body
+        {
+            //The amount of time it is able to hold up its body
+            bodyUpTime += Time.fixedDeltaTime; 
+        }
     }
 
     /// <summary>
