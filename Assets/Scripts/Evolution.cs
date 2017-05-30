@@ -22,14 +22,10 @@ public class Evolution : MonoBehaviour
     public int geneLength = 4;
 
     public GameObject prefab;
-
-    public EvolutionHistory history;
-
     public GameObject container;
 
-    public bool start = true;
-    
-   
+    public EvolutionHistory history;
+       
     private List<List<Environment>> environments = new List<List<Environment>>();
 
     public float minSin = -1;
@@ -45,18 +41,15 @@ public class Evolution : MonoBehaviour
     {
         S = this;
 
-        if (!start)
-            return;
-
+        //If true, we clean the history of genomes and start over
         if (history.hasToBeInitialised)
         {
-
             history.Clear();
 
+            //We add starting genomes created randomly
             for (int i = 0; i < keepTop; i++)
                 history.bestGenomes.Add(Genome.CreateRandom(genomeLength, geneLength));
-            history.hasToBeInitialised = false;
-
+            history.hasToBeInitialised = false; //To avoid making a new swipe
         }
 
         environments.Clear();
@@ -65,14 +58,10 @@ public class Evolution : MonoBehaviour
         StartCoroutine(Simulation());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     public void CreateCreatures(List<Genome> genomes)
     {
-        int i = 0; // How many creeps we are creating
+        int i = 0; //Number of creeps created
         foreach (Genome genome in genomes)
         {
             Genome g;
@@ -86,10 +75,9 @@ public class Evolution : MonoBehaviour
                 for (int m = 0; m < M; m++)
                     g.Mutate();
                 CreateEnvironments(g, i);
-                i++;
+                i++; //Number of creeps created increased
             }
-
-
+            
             // Non mutated genome
             g = genome.Clone();
             g.score = 0;
@@ -108,13 +96,13 @@ public class Evolution : MonoBehaviour
         return tests;
     }
 
-
+    //Return value is an environment, parameters are a genome and an integer/amount of creeps
     public Environment CreateEnvironment(Genome genome, int i)
     {
         // Instantiate the environment
-        Vector3 position = new Vector3(0, 3 * i, 5);
-        Environment environment = (Instantiate(prefab, position, Quaternion.identity) as GameObject).GetComponent<Environment>();
-        environments[i].Add(environment);
+        Vector3 position = new Vector3(0, 3 * i, 0); //Space all creeps on the y-axis in relation to amount
+        Environment environment = (Instantiate(prefab, position, Quaternion.identity) as GameObject).GetComponent<Environment>(); //Instantiate a creep prefab as environment 
+        environments[i].Add(environment); //Environment added to the list of environments
 
         environment.evolvable.genome = genome;
         environment.name = "Creep: " + i;
@@ -224,10 +212,7 @@ public class Evolution : MonoBehaviour
         }
         yield return null;
     }
-
-
-
-
+    
     public void CopulateBestCreatures ()
     {
         List<Genome> genomes = new List<Genome>();
@@ -255,6 +240,7 @@ public class Evolution : MonoBehaviour
     private bool isRunning;
     public static float startTime = 0;
 
+    /*
     public Environment FindEnvironmentWithHighestScore()
     {
         float bestScore = 0;
@@ -272,4 +258,5 @@ public class Evolution : MonoBehaviour
 
         return bestEnvironment;
     }
+    */
 }
