@@ -28,11 +28,11 @@ public class Evolution : MonoBehaviour
        
     private List<List<Environment>> environments = new List<List<Environment>>();
 
-    public float minSin = -1;
-    public float maxSin = +1;
+    public float minSinusVal = -1;
+    public float maxSinusVal = +1;
 
-    public float minP = 0.1f;
-    public float maxP = 5f;
+    public float minPeriodSinus = 0.1f;
+    public float maxPeriodSinus = 5f;
 
     
 
