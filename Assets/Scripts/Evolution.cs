@@ -111,9 +111,14 @@ public class Evolution : MonoBehaviour
         return environment;
     }
 
+    /// <summary>
+    /// Check which creature is best
+    /// </summary>
     public void EvaluateBestCreature()
     {
+        //List of genomes
         List<Genome> scores = new List<Genome>();
+        //For each environment
         foreach (List<Environment> tests in environments)
         {
             // Average score
@@ -128,7 +133,7 @@ public class Evolution : MonoBehaviour
             scores.Add(genome);
         }
 
-
+        //Sort scores
         scores.Sort(
             delegate (Genome a, Genome b)
             {
@@ -181,49 +186,73 @@ public class Evolution : MonoBehaviour
         return best.Clone();
     }
 
+    /// <summary>
+    /// Method for removing creatues
+    /// </summary>
     public void DestroyCreatures()
     {
+        //For each test
         foreach (List<Environment> tests in environments)
+            //For each environment
             foreach (Environment environment in tests)
+                //Destroy the game object
                 Destroy(environment.gameObject);
-
+        //Clear environment list
         environments.Clear();
     }
 
+    /// <summary>
+    /// Main loop
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator Simulation()
     {
+        //For each cycle
         for (int i = 0; i < cycles; i++)
         {
+            //Create creatures with history as paramters
             CreateCreatures(history.bestGenomes);
+            //Set simulation as running
             SetSimulation(true);
-
+            //Wait for specified time
             yield return new WaitForSeconds(simulationTime);
 
+            //Set simulation as not running
             SetSimulation(false);
+
+            //Check which creature was best
             EvaluateBestCreature();
 
-            CopulateBestCreatures();
+            //Mix best creatures
+            MixBestCreatures();
 
+            //Remove all creatures
             DestroyCreatures();
+            //Output score to log
             Debug.Log("Best score: " + history.bestScore);
-
+            //Increase generation
             history.generation++;
+            //wait 1 second
             yield return new WaitForSeconds(1);
         }
         yield return null;
     }
     
-    public void CopulateBestCreatures ()
+    /// <summary>
+    /// Mix together two creatues
+    /// </summary>
+    public void MixBestCreatures ()
     {
         List<Genome> genomes = new List<Genome>();
+        //For how many creatues we want to mix
         for (int i = 0; i < sexed; i ++)
         {
+            //Get two random of the best Genomes
             Genome g1 = history.bestGenomes[Random.Range(0, history.bestGenomes.Count - 1)];
             Genome g2 = history.bestGenomes[Random.Range(0, history.bestGenomes.Count - 1)];
 
-            Genome g3 = g1.Clone();
-
-            genomes.Add(Genome.Copulate(g1, g2));
+            //Add a genome which is a mix of both
+            genomes.Add(Genome.Mix(g1, g2));
         }
 
         history.bestGenomes.AddRange(genomes);
@@ -239,24 +268,4 @@ public class Evolution : MonoBehaviour
     }
     private bool isRunning;
     public static float startTime = 0;
-
-    /*
-    public Environment FindEnvironmentWithHighestScore()
-    {
-        float bestScore = 0;
-        Environment bestEnvironment = null;
-        foreach (List<Environment> tests in environments)
-            foreach (Environment environment in tests)
-            {
-                float score = environment.evolvable.GetScore();
-                if (score > bestScore)
-                {
-                    bestScore = score;
-                    bestEnvironment = environment;
-                }
-            }
-
-        return bestEnvironment;
-    }
-    */
 }

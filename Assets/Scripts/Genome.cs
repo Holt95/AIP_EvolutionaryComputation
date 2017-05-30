@@ -45,7 +45,7 @@ public struct Genome : IMutable<Genome>{
     /// <param name="g1">First parent</param>
     /// <param name="g2">Second parent</param>
     /// <returns>child</returns>
-    public static Genome Sex(Genome g1, Genome g2)
+    public static Genome Mix(Genome g1, Genome g2)
     {
         //The child starts as a clone of first parent
         Genome child = g1.Clone();

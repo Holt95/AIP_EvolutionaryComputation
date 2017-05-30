@@ -35,17 +35,23 @@ public class CreatureSimple : Evolvable
             ;
     }
 
-    public bool IsUp(GameObject obj, float angle = 30)
+    /// <summary>
+    /// Check if head is pointing up
+    /// </summary>
+    /// <param name="head">Head to check</param>
+    /// <param name="angle">Angle to check at</param>
+    /// <returns></returns>
+    public bool IsUp(GameObject head, float angle = 30)
     {
-        return obj.transform.eulerAngles.z < 0 + angle ||
-                obj.transform.eulerAngles.z > 360 - angle;
+        return head.transform.eulerAngles.z < 0 + angle ||
+                head.transform.eulerAngles.z > 360 - angle;
     }
 
     /// <summary>
-    /// Check if head is pointing down or not
+    /// Check if head is pointing down
     /// </summary>
     /// <param name="head">Head to check</param>
-    /// <param name="angle">Angle to check for</param>
+    /// <param name="angle">Angle to check at</param>
     /// <returns></returns>
     public bool IsDown(GameObject head, float angle = 45)
     {
