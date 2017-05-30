@@ -8,11 +8,11 @@ public class Evolution : MonoBehaviour
     public static Evolution S;
 
     public int cycles; //Number of cycles we run 
-    public int keepTop; // keeps the top genomes
-    public int mutationsPerGenome; // mutations for each of the best genomes
+    public int keepTop; //Keeps the top genomes
+    public int mutationsPerGenome; //Mutations for each of the best genomes
     
-    public int minMutations = 1;
-    public int maxMutations = 5;
+    public int minMutations = 1; //Minimum amount of mutations a genome goes through
+    public int maxMutations = 5; //Maximum amount of...
 
     public float simulationTime = 10; // time in seconds simulation is run
 
