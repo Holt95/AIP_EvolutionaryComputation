@@ -3,59 +3,61 @@ using System.Collections;
 
 public class CreatureSimple : Evolvable
 {
-    public GameObject head;
+    public GameObject body;
 
     public ControllerSpring[] limbs;
     public GeneController express = Gene.Evaluate4At;
 
-    public float headUpTime = 0;
+    public float bodyUpTime = 0;
     
     public void FixedUpdate()
     {
-        //base.FixedUpdate(); THIS WAS TP CALL THE CODE BELOW EARLIER
         for (int i = 0; i < limbs.Length; i++)
             limbs[i].SetValue(express(genome.genes[i], Time.time - Evolution.startTime));
-        // Keeps the score updated
-        genome.score = GetScore();
+        
+        genome.score = GetScore(); // Keeps the score updated
 
-        // Body and head UP!
-        if (IsUp(head, 20))
-            headUpTime += Time.fixedDeltaTime;
+        //If body is up with 20 degree
+        if (IsUp(body, 20))
+            bodyUpTime += Time.fixedDeltaTime; //The amount of time it is able to hold up its body
     }
 
+    /// <summary>
+    /// Get score of the creep
+    /// </summary>
+    /// <returns></returns>
     public override float GetScore ()
     {
-        //return head.transform.position.x;
-        float position = head.transform.position.x;
-        return
-            position
-            * (IsDown(head) ? 0.5f : 1f)
-            + (IsUp(head) ? 2f : 0f)
-            + headUpTime / Evolution.S.simulationTime
-            ;
+        float walkingScore = body.transform.position.x; //body position on the x-axis used to score (starting value 0 so higher is better)
+        return  walkingScore 
+                * (IsDown(body) ? 0.5f : 1f) //If body is down, return 0.5 else 1 (WalkingScore valid if were not down, otherwise is only half)
+                + (IsUp(body) ? 2f : 0f) //If body is up return 2 else 0 (bonus given if body is up by the end)
+                + bodyUpTime / Evolution.S.simulationTime; //Amount body is up divided by the amount the similation is run (sets the score between 0 and 1)
     }
 
     /// <summary>
-    /// Check if head is pointing up
+    /// Check if body is pointing up
     /// </summary>
-    /// <param name="head">Head to check</param>
+    /// <param name="body">body to check</param>
     /// <param name="angle">Angle to check at</param>
     /// <returns></returns>
-    public bool IsUp(GameObject head, float angle = 30)
+    public bool IsUp(GameObject body, float angle = 30)
     {
-        return head.transform.eulerAngles.z < 0 + angle ||
-                head.transform.eulerAngles.z > 360 - angle;
+        //Body angle has to be within the amount of accepted degrees to score (resisting sliding across floor)
+        return body.transform.eulerAngles.z < 0 + angle ||
+                body.transform.eulerAngles.z > 360 - angle;
     }
 
     /// <summary>
-    /// Check if head is pointing down
+    /// Check if body is pointing down
     /// </summary>
-    /// <param name="head">Head to check</param>
+    /// <param name="body">body to check</param>
     /// <param name="angle">Angle to check at</param>
     /// <returns></returns>
-    public bool IsDown(GameObject head, float angle = 45)
+    public bool IsDown(GameObject body, float angle = 45)
     {
-        return head.transform.eulerAngles.z > 180 - angle &&
-               head.transform.eulerAngles.z < 180 + angle;
+        //If were flipped we penalise the walking score (not zero, it might have walked really far but messed up in the end, that is still good genes)
+        return body.transform.eulerAngles.z > 180 - angle &&
+               body.transform.eulerAngles.z < 180 + angle;
     }
 }
