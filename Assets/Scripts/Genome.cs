@@ -113,6 +113,10 @@ public struct Gene : IMutable<Gene>
         values = new float[size];
     }
 
+    /// <summary>
+    /// Clone a gene
+    /// </summary>
+    /// <returns></returns>
     public Gene Clone()
     {
         Gene clone = new Gene(values.Length);
@@ -121,13 +125,21 @@ public struct Gene : IMutable<Gene>
         return clone;
     }
 
+    /// <summary>
+    /// Mutate a gene by random variables
+    /// </summary>
     public void Mutate()
     {
         int i = Random.Range(0, values.Length-1);
-        values[i] += Random.Range(-0.1f, +0.1f);
+        values[i] += Random.Range(-0.1f, 0.1f);
         values[i] = Mathf.Clamp01(values[i]);
     }
     
+    /// <summary>
+    /// Creates a random new gene
+    /// </summary>
+    /// <param name="size"></param>
+    /// <returns></returns>
     public static Gene CreateRandom (int size)
     {
         Gene gene = new Gene(size);
@@ -145,11 +157,13 @@ public struct Gene : IMutable<Gene>
         float period = gene.values[2];
         float offset = gene.values[3];
 
-        min = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, min);
-        max = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, max);
-        period = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, period);
-        offset = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, offset);
+        //Map the different values
+        min = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minSinusVal, Evolution.S.maxSinusVal, min);
+        max = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minSinusVal, Evolution.S.maxSinusVal, max);
+        period = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minPeriodSinus, Evolution.S.maxPeriodSinus, period);
+        offset = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minPeriodSinus, Evolution.S.maxPeriodSinus, offset);
 
+        //return the sinusiod with the different values
         return sinusoid(time + offset, min, max, period);
     }
 
