@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 
 public abstract class Controller : MonoBehaviour {
 
@@ -12,3 +13,4 @@ public abstract class Controller : MonoBehaviour {
         return y0 + (x - x0) * (y1 - y0) / d;
     }
 }
+*/

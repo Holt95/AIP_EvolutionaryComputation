@@ -5,7 +5,7 @@ public class CreatureSimple : Evolvable
 {
     public GameObject head;
 
-    public Controller[] limbs;
+    public ControllerSpring[] limbs;
     public GeneController express = Gene.Evaluate4At;
 
     public float headUpTime = 0;

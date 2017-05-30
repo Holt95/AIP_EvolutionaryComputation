@@ -101,10 +101,10 @@ public struct Gene : IMutable<Gene>
         float period = gene.values[2];
         float offset = gene.values[3];
 
-        min = Controller.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, min);
-        max = Controller.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, max);
-        period = Controller.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, period);
-        offset = Controller.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, offset);
+        min = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, min);
+        max = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, max);
+        period = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, period);
+        offset = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, offset);
 
         return sinusoid(time + offset, min, max, period);
     }
@@ -120,9 +120,9 @@ public struct Gene : IMutable<Gene>
         float phase = gene.values[1];
         float freq = gene.values[2];
 
-        amp = Controller.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, amp);
-        phase = Controller.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, phase);
-        freq = Controller.linearInterpolation(0, 1, 0, Mathf.PI, freq);
+        amp = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minSin, Evolution.S.maxSin, amp);
+        phase = ControllerSpring.linearInterpolation(0, 1, Evolution.S.minP, Evolution.S.maxP, phase);
+        freq = ControllerSpring.linearInterpolation(0, 1, 0, Mathf.PI, freq);
 
         return amp * Mathf.Cos(phase + freq * time);
     }
